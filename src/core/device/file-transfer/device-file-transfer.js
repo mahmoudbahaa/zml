@@ -1,7 +1,4 @@
+import TransferFile from 'zeppos-cross-api/bleTransferFile'
 import { getFileTransfer } from '../../common/file-transfer.js'
-import { _r } from '../../common/common.js'
-
-const TransferFile = _r('@zos/ble/TransferFile')
-export const fileTransferLib = getFileTransfer(
-  TransferFile ? new TransferFile() : undefined,
-)
+// @ts-ignore
+export const fileTransferLib = getFileTransfer(new TransferFile())

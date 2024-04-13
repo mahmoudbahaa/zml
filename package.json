@@ -37,6 +37,7 @@
   "author": "huangtao1@zepp.com",
   "license": "Apache-2.0",
   "devDependencies": {
+    "zeppos-cross-api": "github:mahmoudbahaa/zeppos-cross-api",
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",

@@ -1,21 +1,29 @@
-import { Logger } from '../../shared/logger.js'
-import { isZeppOS } from './common.js'
-import { MessagePayloadDataTypeOp } from '../../shared/message.js'
-import { buf2str, buf2json, buf2bin } from '../../shared/data.js'
-import { isPlainObject } from '../../shared/utils.js'
+import { buf2bin, buf2json, buf2str } from 'zeppos-cross-api/data-conversion'
 
-const logger = Logger.getLogger('message-builder')
-
-const shakeTimeout = 5000
 const requestTimeout = 60000
 
-const DEBUG = __DEBUG__
+const DEBUG = false
 
 const HM_RPC = 'hmrpcv1'
 
-export function wrapperMessage(messageBuilder) {
+const MessagePayloadDataTypeOp = {
+  EMPTY: 0x0,
+  TEXT: 0x1,
+  JSON: 0x2,
+  BIN: 0x3
+}
+
+function isPlainObject (item) {
+  return (
+    typeof item === 'object' &&
+    !Buffer.isBuffer(item) &&
+    !Array.isArray(item) &&
+    item !== null
+  )
+}
+
+export function wrapperMessage(messageBuilder, logger) {
   return {
-    shakeTimeout,
     requestTimeout,
     transport: messageBuilder,
     onCall(cb) {
@@ -44,7 +52,6 @@ export function wrapperMessage(messageBuilder) {
       return this
     },
     call(data) {
-      isZeppOS() && messageBuilder.fork(this.shakeTimeout)
       data = isPlainObject(data)
         ? data.contentType
           ? data
@@ -114,7 +121,6 @@ export function wrapperMessage(messageBuilder) {
       return this
     },
     request(data, opts = {}) {
-      isZeppOS() && messageBuilder.fork(this.shakeTimeout)
       DEBUG &&
         logger.debug(
           'current request count=>%d',

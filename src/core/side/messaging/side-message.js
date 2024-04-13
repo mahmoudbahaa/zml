@@ -1,6 +1,8 @@
-import { MessageBuilder } from '../../../shared/message.js'
+/* global Logger */
+import { MessageBuilder } from 'zeppos-cross-api/message-side'
 import { wrapperMessage } from '../../common/message.js'
 
 const messageBuilder = new MessageBuilder()
 
-export const messaging = wrapperMessage(messageBuilder)
+// @ts-ignore
+export const messaging = wrapperMessage(messageBuilder, Logger.getLogger('message-builder-side'))

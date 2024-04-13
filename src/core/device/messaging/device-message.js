@@ -1,6 +1,7 @@
-import { MessageBuilder } from '../../../shared/message.js'
+import { getPackageInfo } from 'zeppos-cross-api/app'
+import { MessageBuilder } from 'zeppos-cross-api/message'
+import { log } from 'zeppos-cross-api/utils'
 import { wrapperMessage } from '../../common/message.js'
-import { getPackageInfo } from '../../common/common.js'
 
 const appDevicePort = 20
 const appSidePort = 0
@@ -12,5 +13,5 @@ export function createDeviceMessage() {
     appSidePort,
   })
 
-  return wrapperMessage(messageBuilder)
+  return wrapperMessage(messageBuilder, log.getLogger('message-builder-device'))
 }
